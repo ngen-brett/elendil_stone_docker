@@ -36,7 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner}}/elendil_stone_docker
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=elendil_stone_docker
+          tags: ghcr.io/${{ github.repository_owner}}/${{ github.repository }}
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=${{ github.repository}
       - name: get output time
         run: echo "the time was ${{ steps.build.time }}"
