@@ -29,8 +29,13 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: git clone git@github.com:ngen-brett/elendil_stone.git
           
-      - name: Docker build
-        uses: ./
+      - name: Build and push Docker image
+        uses: docker/build-push-action
         id: build
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=elendil_stone_docker
       - name: get output time
         run: echo "the time was ${{ steps.build.time }}"
