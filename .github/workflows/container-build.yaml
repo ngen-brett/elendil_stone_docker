@@ -1,0 +1,14 @@
+on: [push]
+
+jobs:
+  container-build:
+    runs-on: ubuntu-latest
+    name: Build webserver/app container
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Docker build
+        uses: ./
+        id: build
+      - name: get output time
+        run: echo "the time was ${{ steps.build.time }}"
