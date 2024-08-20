@@ -7,11 +7,12 @@ jobs:
     steps:
       - name: checkout local
         uses: actions/checkout@v4
+
       - name: decrypt secrets
         env:
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
         run: |
-          openssl aes-256-cbc -in .github/workflows/secrets/id_ed25519.enc -out .github/workflows
+          openssl aes-256-cbc -in .github/workflows/secrets/id_ed25519.enc -out .github/workflows/secrets/id_ed25519 -pass pass:${ENCRYPTION_KEY} -d -md sha1
 
       - name: setup SSH agent
         env:
