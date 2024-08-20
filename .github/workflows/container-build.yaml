@@ -6,7 +6,7 @@ jobs:
     name: Build webserver/app container
     permissions:
       packages: write
-      repository: read
+      repositories: read
     steps:
       - name: checkout local
         uses: actions/checkout@v4
