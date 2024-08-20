@@ -5,11 +5,29 @@ jobs:
     runs-on: ubuntu-latest
     name: Build webserver/app container
     steps:
-      - name: Checkout
+      - name: checkout local
         uses: actions/checkout@v4
-        with:
-          repository: ngen-brett/elendil_stone
-          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: decrypt secrets
+        env:
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+        run: |
+          openssl aes-256-cbc -in .github/workflows/secrets/id_ed25519.enc -out .github/workflows
+
+      - name: setup SSH agent
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          chmod 0600 .github/workflows/secrets/id_ed25519
+          ssh-add .github/workflows/secrets/id_ed25519
+
+      - name: Checkout app
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: git clone git@github.com:ngen-brett/elendil_stone.git
+          
       - name: Docker build
         uses: ./
         id: build
