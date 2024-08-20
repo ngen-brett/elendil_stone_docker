@@ -4,6 +4,8 @@ jobs:
   container-build:
     runs-on: ubuntu-latest
     name: Build webserver/app container
+    permissions:
+      packages: write
     steps:
       - name: checkout local
         uses: actions/checkout@v4
