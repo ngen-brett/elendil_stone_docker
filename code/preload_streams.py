@@ -3,8 +3,8 @@
 
 try:
   import redis
-  import better_exceptions
   import os
+  import better_exceptions
 except Exception as e:
   print('Imports failed: %s' % str(e))
   
