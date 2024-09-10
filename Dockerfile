@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8087
 
-CMD ["gunicorn", "-b", "0.0.0.0:8087, "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8087", "app:app"]
